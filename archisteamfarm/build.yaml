@@ -1,0 +1,13 @@
+# Base image: official ArchiSteamFarm docker image (multi-arch manifest,
+# covers amd64, aarch64 and armv7). The Dockerfile only adds the add-on
+# bootstrap layer. Bump the tag to update ASF, then bump "version" in
+# config.yml so Supervisor rebuilds the image.
+build_from:
+  amd64: docker.io/justarchi/archisteamfarm:6.3.11.7
+  aarch64: docker.io/justarchi/archisteamfarm:6.3.11.7
+  armv7: docker.io/justarchi/archisteamfarm:6.3.11.7
+codenotary: ""
+labels:
+  io.hass.type: addon
+  org.opencontainers.image.source: https://github.com/JustArchiNET/ArchiSteamFarm
+  org.opencontainers.image.licenses: Apache-2.0

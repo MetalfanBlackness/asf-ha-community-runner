@@ -1,0 +1,38 @@
+name: ArchiSteamFarm
+version: "0.0.1"
+slug: archisteamfarm
+description: UNOFFICIAL community app running ArchiSteamFarm inside Home Assistant
+url: https://github.com/JustArchiNET/ArchiSteamFarm
+arch:
+  - amd64
+  - aarch64
+  - armv7
+startup: services
+boot: auto
+init: false
+host_network: false
+ports:
+  "1242/tcp": 1242
+ports_description:
+  "1242/tcp": ASF web interface (ASF-ui) and IPC API
+watchdog: "http://[HOST]:1242"
+webui: "http://[HOST]:1242"
+map:
+  - share: rw
+  - config: rw
+options:
+  config_location: config
+  ipc_password: ""
+  headless: true
+  bot_username: ""
+  bot_password: ""
+  steam_parental_code: ""
+  extra_args: ""
+schema:
+  config_location: "list(addon|config|share)"
+  ipc_password: password
+  headless: bool
+  bot_username: str
+  bot_password: password
+  steam_parental_code: "str?"
+  extra_args: str?
