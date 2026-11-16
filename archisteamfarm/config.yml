@@ -16,7 +16,7 @@ ports:
 ports_description:
   "1242/tcp": ASF web interface (ASF-ui) and IPC API
 watchdog: "http://[HOST]:1242"
-webui: "http://[HOST]:1242"
+webui: "http://[HOST]:[PORT:1242]"
 map:
   - share: rw
   - config: rw
