@@ -23,8 +23,11 @@ echo "[addon] ASF config dir: ${ASF_DATA}"
 mkdir -p "${ASF_DATA}/config"
 
 # --- ASF.json: global ASF config -------------------------------------------
-# Only written on first run; edits made via ASF-ui or by hand are preserved.
-if [ ! -f "${ASF_DATA}/ASF.json" ]; then
+# Written into <base>/config (the directory ASF reads, resolved from the
+# current directory), so ASF.json, IPC.config and bots all live under
+# ${ASF_DATA}/config. Only written on first run; edits made via ASF-ui or by
+# hand are preserved.
+if [ ! -f "${ASF_DATA}/config/ASF.json" ]; then
     headless="$(get_opt 'headless')"
     if [ "${headless}" != "false" ]; then headless="true"; fi
     jq -n --argjson headless "${headless}" '{
@@ -33,14 +36,14 @@ if [ ! -f "${ASF_DATA}/ASF.json" ]; then
         Headless: $headless,
         IPC: true,
         UpdateChannel: 0
-    }' > "${ASF_DATA}/ASF.json"
-    echo "[addon] Wrote default ASF.json to ${ASF_DATA}/ASF.json"
+    }' > "${ASF_DATA}/config/ASF.json"
+    echo "[addon] Wrote default ASF.json to ${ASF_DATA}/config/ASF.json"
 fi
 
 # --- IPC.config: Kestrel binding for the exposed port ----------------------
 # Regenerated on every start so option changes take effect. If the user placed
 # their own IPC.config in the data directory, it wins.
-if [ ! -f "${ASF_DATA}/IPC.config" ]; then
+if [ ! -f "${ASF_DATA}/config/IPC.config" ]; then
     ipc_password="$(get_opt 'ipc_password')"
     jq -n --arg pw "${ipc_password}" '{
         Kestrel: {
@@ -55,17 +58,17 @@ if [ ! -f "${ASF_DATA}/IPC.config" ]; then
             ]
         },
         IPCPassword: $pw
-    }' > "${ASF_DATA}/IPC.config"
+    }' > "${ASF_DATA}/config/IPC.config"
     echo "[addon] Wrote IPC.config (port 1242)"
 fi
 
 # Surface a stale-binding problem instead of failing silently: an existing
 # IPC.config always wins over the generated one.
-if [ -f "${ASF_DATA}/IPC.config" ] && grep -q ':12424' "${ASF_DATA}/IPC.config"; then
+if [ -f "${ASF_DATA}/config/IPC.config" ] && grep -q ':12424' "${ASF_DATA}/config/IPC.config"; then
     echo "[addon][WARNING] Existing IPC.config still binds port 12424, so ASF"
     echo "[addon][WARNING] will NOT listen on host port 1242 and the published"
     echo "[addon][WARNING] port mapping goes nowhere."
-    echo "[addon][WARNING] Fix: delete ${ASF_DATA}/IPC.config (it is recreated)"
+    echo "[addon][WARNING] Fix: delete ${ASF_DATA}/config/IPC.config (it is recreated)"
     echo "[addon][WARNING] or edit its Url to http://0.0.0.0:1242, then restart."
 fi
 

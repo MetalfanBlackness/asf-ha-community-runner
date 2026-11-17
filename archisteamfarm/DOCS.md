@@ -46,9 +46,10 @@ via the ASF API.
 ## Data
 
 ASF's configuration (bot files, `ASF.json`, `IPC.config`, database, logs) is
-stored in the directory selected with the `config_location` option and is
-preserved across add-on updates and restarts. On first start this add-on
-creates:
+stored under the base directory selected with the `config_location` option,
+inside the `config` subdirectory ASF itself uses. With the default option
+that means `/config/archisteamfarm/config/`. Data is preserved across add-on
+updates and restarts. On first start this add-on creates:
 
 - `ASF.json` with `EulaAccepted: true`, stable update channel and `Headless`
   from the options above,

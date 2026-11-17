@@ -51,7 +51,10 @@ Requirements: Home Assistant OS or Home Assistant Supervised on `amd64`,
 - Open `http://<hostassistant-ip>:1242` for ASF-ui.
 - The same port also serves the ASF API (`/api`, swagger under `/swagger`)
   for automation against Home Assistant.
-- ASF configs live in the directory chosen with `config_location`. On first
+- ASF configs live under the base directory chosen with `config_location`, in
+  the `config` subdirectory ASF itself uses (default base:
+  `/config/archisteamfarm`, so `ASF.json`, `IPC.config` and bot files live in
+  `/config/archisteamfarm/config/`). On first
   start the add-on creates a default `ASF.json` and an `IPC.config` (if you
   didn't provide your own), plus one bot file from the options above if you
   filled them in. All further bots and settings can be managed from ASF-ui.
