@@ -45,10 +45,12 @@ via the ASF API.
 
 ## Data
 
-ASF's configuration (bot files, `ASF.json`, `IPC.config`, database, logs) is
+ASF's configuration (bot files, `ASF.json`, `IPC.config`, database) is
 stored under the base directory selected with the `config_location` option,
 inside the `config` subdirectory ASF itself uses. With the default option
-that means `/config/archisteamfarm/config/`. Data is preserved across add-on
+that means `/config/archisteamfarm/config/`. ASF's log files are written to
+`<base>/logs` (default: `/config/archisteamfarm/logs/`) — the same layout
+plain docker ASF uses under `/app`. Data is preserved across add-on
 updates and restarts. On first start this add-on creates:
 
 - `ASF.json` with `EulaAccepted: true`, stable update channel and `Headless`

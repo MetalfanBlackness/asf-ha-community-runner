@@ -54,7 +54,8 @@ Requirements: Home Assistant OS or Home Assistant Supervised on `amd64`,
 - ASF configs live under the base directory chosen with `config_location`, in
   the `config` subdirectory ASF itself uses (default base:
   `/config/archisteamfarm`, so `ASF.json`, `IPC.config` and bot files live in
-  `/config/archisteamfarm/config/`). On first
+  `/config/archisteamfarm/config/`). ASF's own log files are written to
+  `<base>/logs` (default: `/config/archisteamfarm/logs/`). On first
   start the add-on creates a default `ASF.json` and an `IPC.config` (if you
   didn't provide your own), plus one bot file from the options above if you
   filled them in. All further bots and settings can be managed from ASF-ui.
