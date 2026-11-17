@@ -59,6 +59,16 @@ if [ ! -f "${ASF_DATA}/IPC.config" ]; then
     echo "[addon] Wrote IPC.config (port 1242)"
 fi
 
+# Surface a stale-binding problem instead of failing silently: an existing
+# IPC.config always wins over the generated one.
+if [ -f "${ASF_DATA}/IPC.config" ] && grep -q ':12424' "${ASF_DATA}/IPC.config"; then
+    echo "[addon][WARNING] Existing IPC.config still binds port 12424, so ASF"
+    echo "[addon][WARNING] will NOT listen on host port 1242 and the published"
+    echo "[addon][WARNING] port mapping goes nowhere."
+    echo "[addon][WARNING] Fix: delete ${ASF_DATA}/IPC.config (it is recreated)"
+    echo "[addon][WARNING] or edit its Url to http://0.0.0.0:1242, then restart."
+fi
+
 # --- First bot from add-on options ------------------------------------------
 # Only creates a bot file when none exists yet. Additional bots can be added
 # through ASF-ui or by dropping .json files into the config directory.
