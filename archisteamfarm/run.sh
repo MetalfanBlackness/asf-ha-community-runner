@@ -11,7 +11,7 @@ ASF_BIN="/usr/bin/ArchiSteamFarm"
 #   addon  -> /data/asf             (add-on internal, survives updates)
 #   share  -> /share/archisteamfarm  (shared folder, e.g. Samba add-on)
 
-get_opt() { jq -r "${1} // empty" "${OPTIONS}"; }
+get_opt() { jq -r --arg key "${1}" '.[$key] // empty' "${OPTIONS}"; }
 
 case "$(get_opt 'config_location' | tr -d '[:space:]')" in
     addon)  ASF_DATA="/data/asf" ;;
